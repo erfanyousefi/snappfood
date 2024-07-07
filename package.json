@@ -22,6 +22,7 @@
   "dependencies": {
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
+    "@nestjs/jwt": "^10.2.0",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.3.1",
     "@nestjs/typeorm": "^10.0.2",
@@ -33,6 +34,7 @@
     "mysql2": "^3.10.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
+    "slugify": "^1.6.6",
     "swagger": "^0.7.5",
     "swagger-ui-express": "^5.0.1",
     "typeorm": "^0.3.20"
