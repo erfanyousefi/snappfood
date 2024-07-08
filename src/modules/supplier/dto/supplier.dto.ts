@@ -30,3 +30,10 @@ export class SupplementaryInformationDto {
   @IsIdentityCard("IR")
   national_code: string;
 }
+
+export class UploadDocsDto {
+  @ApiProperty({format: "binary"})
+  acceptedDoc: string;
+  @ApiProperty({format: "binary"})
+  image: string;
+}

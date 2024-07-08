@@ -23,6 +23,8 @@ import {PayloadType} from "../auth/types/payload";
 import {REQUEST} from "@nestjs/core";
 import {Request} from "express";
 import {SupplierStatus} from "./enum/status.enum";
+import {DocumentType} from "./type";
+import {S3Service} from "../s3/s3.service";
 
 @Injectable({scope: Scope.REQUEST})
 export class SupplierService {
@@ -33,6 +35,7 @@ export class SupplierService {
     private supplierOtpRepository: Repository<SupplierOtpEntity>,
     private categoryService: CategoryService,
     private jwtService: JwtService,
+    private s3Service: S3Service,
     @Inject(REQUEST) private req: Request
   ) {}
 
@@ -126,7 +129,6 @@ export class SupplierService {
     supplier.otpId = otp.id;
     await this.supplierRepository.save(supplier);
   }
-
   async saveSupplementaryInformation(infoDto: SupplementaryInformationDto) {
     const {id} = this.req.user;
     const {email, national_code} = infoDto;
@@ -147,8 +149,25 @@ export class SupplierService {
       }
     );
     return {
-      message: "updated information successfully"
-    }
+      message: "updated information successfully",
+    };
+  }
+  async uploadDocuments(files: DocumentType) {
+    const {id} = this.req.user;
+    const {image, acceptedDoc} = files;
+    const supplier = await this.supplierRepository.findOneBy({id});
+    const imageResult = await this.s3Service.uploadFile(image[0], "images");
+    const docsResult = await this.s3Service.uploadFile(
+      acceptedDoc[0],
+      "acceptedDoc"
+    );
+    if (imageResult) supplier.image = imageResult.Location;
+    if (docsResult) supplier.document = docsResult.Location;
+    supplier.status = SupplierStatus.UploadedDocument;
+    await this.supplierRepository.save(supplier);
+    return {
+      message: "success",
+    };
   }
   makeTokens(payload: PayloadType) {
     const accessToken = this.jwtService.sign(payload, {

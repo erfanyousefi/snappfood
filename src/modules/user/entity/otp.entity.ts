@@ -15,3 +15,4 @@ export class OTPEntity {
   @OneToOne(() => UserEntity, (user) => user.otp, {onDelete: "CASCADE"})
   user: UserEntity;
 }
+ 
