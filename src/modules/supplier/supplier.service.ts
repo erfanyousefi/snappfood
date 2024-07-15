@@ -14,10 +14,9 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {SupplierEntity} from "./entities/supplier.entity";
 import {Repository} from "typeorm";
 import {CategoryService} from "../category/category.service";
-import {Mobile} from "aws-sdk";
 import {SupplierOtpEntity} from "./entities/otp.entity";
 import {randomInt} from "crypto";
-import {CheckOtpDto} from "../auth/dto/otp.dto";
+import {CheckOtpDto, SendOtpDto} from "../auth/dto/otp.dto";
 import {JwtService} from "@nestjs/jwt";
 import {PayloadType} from "../auth/types/payload";
 import {REQUEST} from "@nestjs/core";
@@ -104,6 +103,17 @@ export class SupplierService {
       accessToken,
       refreshToken,
       message: "You logged-in successfully",
+    };
+  }
+  async sendOtp(otpDto: SendOtpDto) {
+    const {mobile} = otpDto;
+    let supplier = await this.supplierRepository.findOneBy({phone: mobile});
+    if (!supplier) {
+      throw new UnauthorizedException("not found account");
+    }
+    await this.createOtpForSupplier(supplier);
+    return {
+      message: "sent code successfully",
     };
   }
   async createOtpForSupplier(supplier: SupplierEntity) {
@@ -195,7 +205,12 @@ export class SupplierService {
         if (!supplier) {
           throw new UnauthorizedException("login on your account ");
         }
-        return supplier;
+        return {
+          id: supplier.id,
+          first_name: supplier.manager_name,
+          last_name: supplier.manager_family,
+          mobile: supplier.phone,
+        };
       }
       throw new UnauthorizedException("login on your account ");
     } catch (error) {

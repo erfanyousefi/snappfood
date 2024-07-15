@@ -19,5 +19,6 @@ import {JwtService} from "@nestjs/jwt";
   ],
   controllers: [SupplierController],
   providers: [SupplierService, S3Service, CategoryService, JwtService],
+  exports: [SupplierService, JwtService, S3Service, TypeOrmModule],
 })
 export class SupplierModule {}

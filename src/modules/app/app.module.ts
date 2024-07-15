@@ -6,8 +6,10 @@ import {TypeOrmConfig} from "src/config/typeorm.config";
 import {CategoryModule} from "../category/category.module";
 import {AuthModule} from "../auth/auth.module";
 import {SupplierModule} from "../supplier/supplier.module";
-import {MenuController} from "../menu/menu.controller";
+import {MenuController} from "../menu/controllers/menu.controller";
 import {MenuModule} from "../menu/menu.module";
+import {DiscountModule} from "../discount/discount.module";
+import {BasketModule} from "../basket/basket.module";
 
 @Module({
   imports: [
@@ -15,7 +17,9 @@ import {MenuModule} from "../menu/menu.module";
     AuthModule,
     CategoryModule,
     SupplierModule,
-    MenuModule
+    MenuModule,
+    DiscountModule,
+    BasketModule,
   ],
   controllers: [AppController],
   providers: [AppService],

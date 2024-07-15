@@ -12,6 +12,9 @@ import {
 import {UserAddressEntity} from "./address.entity";
 import {OTPEntity} from "./otp.entity";
 import {FeedbackEntity} from "src/modules/menu/entities/feedback.entity";
+import {UserBasketEntity} from "src/modules/basket/entity/basket.entity";
+import {OrderEntity} from "src/modules/order/entity/order.entity";
+import {PaymentEntity} from "src/modules/payment/entity/payment.entity";
 
 @Entity(EntityNames.User)
 export class UserEntity {
@@ -41,9 +44,15 @@ export class UserEntity {
   addressList: UserAddressEntity[];
   @OneToMany(() => FeedbackEntity, (feedback) => feedback.user)
   feedbacks: FeedbackEntity[];
+  @OneToMany(() => UserBasketEntity, (basket) => basket.user)
+  basket: UserBasketEntity[];
   @Column({nullable: true})
   otpId: number;
   @OneToOne(() => OTPEntity, (otp) => otp.user)
   @JoinColumn()
   otp: OTPEntity;
+  @OneToMany(() => OrderEntity, (order) => order.address)
+  orders: OrderEntity[];
+  @OneToMany(() => PaymentEntity, (payment) => payment.user)
+  payments: PaymentEntity[];
 }

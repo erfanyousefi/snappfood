@@ -9,12 +9,14 @@ import {
 } from "typeorm";
 import {MenuEntity} from "./menu.entity";
 
-@Entity(EntityNames.Type)
+@Entity(EntityNames.MenuType)
 export class TypeEntity {
   @PrimaryGeneratedColumn("increment")
   id: number;
   @Column()
   title: string;
+  @Column({default: 0})
+  priority: number;
   @Column()
   supplierId: number;
   @ManyToOne(() => SupplierEntity, (supplier) => supplier.menuTypes, {

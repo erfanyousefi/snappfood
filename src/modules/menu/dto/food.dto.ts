@@ -3,7 +3,7 @@ import {ApiProperty, PartialType} from "@nestjs/swagger";
 export class FoodDto {
   @ApiProperty()
   name: string;
-  @ApiProperty({type: "binary"})
+  @ApiProperty({format: "binary"})
   image: string;
   @ApiProperty()
   price: number;
@@ -12,7 +12,7 @@ export class FoodDto {
   @ApiProperty()
   description: string;
   @ApiProperty()
-  score: number;
+  typeId: number;
 }
 
 export class UpdateFoodDto extends PartialType(FoodDto) {}

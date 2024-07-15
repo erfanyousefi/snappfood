@@ -9,6 +9,8 @@ import {
 import {FeedbackEntity} from "./feedback.entity";
 import {SupplierEntity} from "src/modules/supplier/entities/supplier.entity";
 import {TypeEntity} from "./type.entity";
+import {UserBasketEntity} from "src/modules/basket/entity/basket.entity";
+import {OrderItemEntity} from "src/modules/order/entity/order-items.entity";
 
 @Entity(EntityNames.Menu)
 export class MenuEntity {
@@ -18,13 +20,17 @@ export class MenuEntity {
   name: string;
   @Column()
   image: string;
+  @Column()
+  key: string;
   @Column({type: "double"})
   price: number;
   @Column({type: "double", default: 0})
   discount: number;
+  @Column({default: false})
+  is_active: boolean;
   @Column()
   description: string;
-  @Column({type: "double"})
+  @Column({type: "double", default: 0})
   score: number;
   @Column()
   typeId: number;
@@ -38,4 +44,8 @@ export class MenuEntity {
   type: TypeEntity;
   @OneToMany(() => FeedbackEntity, (feedback) => feedback.food)
   feedbacks: FeedbackEntity[];
+  @OneToMany(() => UserBasketEntity, (basket) => basket.food)
+  baskets: UserBasketEntity[];
+  @OneToMany(() => OrderItemEntity, (order) => order.food)
+  orders: OrderItemEntity[];
 }
