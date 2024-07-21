@@ -18,7 +18,7 @@ export class OrderEntity {
   id: number;
   @Column()
   userId: number;
-  @Column()
+  @Column({nullable: true})
   addressId: number;
   @Column()
   payment_amount: number;

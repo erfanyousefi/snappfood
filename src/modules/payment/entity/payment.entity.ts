@@ -1,20 +1,24 @@
 import {EntityNames} from "src/common/enum/entity-name.enum";
 import {OrderEntity} from "src/modules/order/entity/order.entity";
 import {UserEntity} from "src/modules/user/entity/user.entity";
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity(EntityNames.Payment)
 export class PaymentEntity {
   @PrimaryGeneratedColumn("increment")
   id: number;
-  @Column()
+  @Column({default: false})
   status: boolean;
   @Column()
   amount: number;
   @Column()
   invoice_number: string;
-  @Column()
-  invoice_date: Date;
   @Column()
   userId: number;
   @Column()
@@ -27,4 +31,6 @@ export class PaymentEntity {
     onDelete: "CASCADE",
   })
   user: UserEntity;
+  @CreateDateColumn()
+  created_at: Date;
 }
