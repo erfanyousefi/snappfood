@@ -14,6 +14,9 @@ import {MenuTypeService} from "../menu/service/type.service";
 import {S3Service} from "../s3/s3.service";
 import {OrderEntity} from "../order/entity/order.entity";
 import {ZarinpalService} from "../http/zarinpal.service";
+import {OrderService} from "../order/order.service";
+import {UserAddressEntity} from "../user/entity/address.entity";
+import {PaymentEntity} from "./entity/payment.entity";
 
 @Module({
   imports: [
@@ -24,6 +27,8 @@ import {ZarinpalService} from "../http/zarinpal.service";
       MenuEntity,
       TypeEntity,
       OrderEntity,
+      UserAddressEntity,
+      PaymentEntity,
     ]),
   ],
   providers: [
@@ -32,6 +37,7 @@ import {ZarinpalService} from "../http/zarinpal.service";
     MenuService,
     DiscountService,
     MenuTypeService,
+    OrderService,
     S3Service,
   ],
   controllers: [PaymentController],

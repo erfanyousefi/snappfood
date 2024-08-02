@@ -19,6 +19,8 @@ export class PaymentEntity {
   amount: number;
   @Column()
   invoice_number: string;
+  @Column({nullable: true})
+  authority: string;
   @Column()
   userId: number;
   @Column()
