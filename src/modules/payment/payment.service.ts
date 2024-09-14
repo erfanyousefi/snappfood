@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   ConflictException,
   Inject,
   Injectable,
@@ -7,15 +6,15 @@ import {
   Scope,
 } from "@nestjs/common";
 import {REQUEST} from "@nestjs/core";
+import {InjectRepository} from "@nestjs/typeorm";
 import {Request} from "express";
+import {Repository} from "typeorm";
 import {BasketService} from "../basket/basket.service";
 import {ZarinpalService} from "../http/zarinpal.service";
 import {OrderService} from "../order/order.service";
-import {PaymentDataDto, PaymentDto} from "./dto/payment.dto";
-import {InjectRepository} from "@nestjs/typeorm";
-import {PaymentEntity} from "./entity/payment.entity";
-import {Repository} from "typeorm";
 import {OrderStatus} from "../order/status.enum";
+import {PaymentDataDto, PaymentDto} from "./dto/payment.dto";
+import {PaymentEntity} from "./entity/payment.entity";
 
 @Injectable({scope: Scope.REQUEST})
 export class PaymentService {
