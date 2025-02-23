@@ -51,7 +51,7 @@ export class SupplierService {
     const supplier = await this.supplierRepository.findOneBy({phone});
     if (supplier) throw new ConflictException("supplier account already exist");
     const category = await this.categoryService.findOneById(categoryId);
-    let agent: SupplierEntity = null;
+    let agent: SupplierEntity | null = null;
     if (invite_code) {
       agent = await this.supplierRepository.findOneBy({invite_code});
     }
@@ -63,7 +63,7 @@ export class SupplierService {
       categoryId: category.id,
       city,
       store_name,
-      agentId: agent?.id ?? null,
+      agentId: agent?.id,
       invite_code: mobileNumber.toString(32).toUpperCase(),
     });
     await this.supplierRepository.save(account);
@@ -171,6 +171,7 @@ export class SupplierService {
       acceptedDoc[0],
       "acceptedDoc"
     );
+    if (!supplier) throw new NotFoundException('supplier not found')
     if (imageResult) supplier.image = imageResult.Location;
     if (docsResult) supplier.document = docsResult.Location;
     supplier.status = SupplierStatus.UploadedDocument;
